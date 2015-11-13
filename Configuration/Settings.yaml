@@ -1,0 +1,17 @@
+PackageFactory:
+  OffRoad:
+    mapping:
+      '/neos/info': '/en/features.html'
+      '/my/brother.phtml': '/en/try-me.html'
+
+TYPO3:
+  Flow:
+    http:
+      chain:
+        'process':
+          chain:
+            'mapping':
+              position: 'before routing'
+              component: 'PackageFactory\OffRoad\HTTP\Components\MappingComponent'
+              componentOptions:
+                'someOption': 'someValue'

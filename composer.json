@@ -1,0 +1,13 @@
+{
+    "name": "packagefactory/offroad",
+    "type": "typo3-flow-package",
+    "description": "Remap your Routes in Flow and Neos",
+    "require": {
+        "typo3/flow": "3.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "PackageFactory\\OffRoad": "Classes"
+        }
+    }
+}
