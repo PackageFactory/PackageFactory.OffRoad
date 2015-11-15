@@ -4,9 +4,10 @@ namespace PackageFactory\OffRoad\HTTP\Components;
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Http\Component\ComponentInterface;
 use TYPO3\Flow\Http\Component\ComponentContext;
+use PackageFactory\OffRoad\Domain\Service\MappingService;
 
 /**
- * 
+ *
  */
 class MappingComponent implements ComponentInterface {
 
@@ -17,6 +18,12 @@ class MappingComponent implements ComponentInterface {
     protected $mapping = array();
 
     /**
+     * @Flow\Inject
+     * @var MappingService
+     */
+    protected $mappingService;
+
+    /**
      * @param ComponentContext $componentContext
      * @return void
      */
@@ -25,12 +32,12 @@ class MappingComponent implements ComponentInterface {
         $requestPath = $requestUri->getPath();
 
         foreach ($this->mapping as $from => $to) {
-            if ($requestPath === $from) {
-                $requestPath = $to;
-            } else if ($requestPath === $to) {
+            if ($this->mappingService->requestPathMatches($requestPath, $from)) {
+                $requestPath = $this->mappingService->mapRequestPathToTarget($requestPath, $from, $to);;
+            } else if ($this->mappingService->requestPathMatches($requestPath, $to)) {
                 $response = $componentContext->getHttpResponse();
                 $response->setStatus(301);
-                $response->setHeader('Location', $from);
+                $response->setHeader('Location', $this->mappingService->mapRequestPathToTarget($requestPath, $to, $from));
             }
         }
 

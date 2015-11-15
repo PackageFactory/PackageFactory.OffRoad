@@ -2,6 +2,7 @@
 namespace PackageFactory\OffRoad\Aspects;
 
 use TYPO3\Flow\Annotations as Flow;
+use PackageFactory\OffRoad\Domain\Service\MappingService;
 
 /**
  * @Flow\Scope("singleton")
@@ -16,6 +17,12 @@ class UriBuilderAspect
     protected $mapping = array();
 
     /**
+     * @Flow\Inject
+     * @var MappingService
+     */
+    protected $mappingService;
+
+    /**
      * @Flow\Around("method(TYPO3\Flow\Mvc\Routing\UriBuilder->build())")
      *
      * @param \TYPO3\FLOW\AOP\JoinPointInterface $joinPoint the join point
@@ -27,8 +34,8 @@ class UriBuilderAspect
         $uri = $joinPoint->getAdviceChain()->proceed($joinPoint);
 
         foreach ($this->mapping as $from => $to) {
-            if ($uri === $to) {
-                $uri = $from;
+            if ($this->mappingService->requestPathMatches($uri, $to)) {
+                $uri = $this->mappingService->mapRequestPathToTarget($uri , $to, $from);
             }
         }
 
