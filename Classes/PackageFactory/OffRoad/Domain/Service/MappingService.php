@@ -34,7 +34,18 @@ class MappingService {
      * @return string
      */
     public function mapRequestPathToTarget($requestPath, $from, $to) {
-        return $to;
+        if (preg_match($this->translatePatternToRegex($from), $requestPath, $matches)) {
+            $result = PatternUtility::translatePatternToTemplate($to);
+            foreach ($matches as $key => $value) {
+                if (is_string($key)) {
+                    $result = str_replace(sprintf('{%s}', $key), $value, $result);
+                }
+            }
+
+            return $result;
+        }
+
+        return $requestPath;
     }
 
     /**
