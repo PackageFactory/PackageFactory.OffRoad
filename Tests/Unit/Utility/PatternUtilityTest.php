@@ -20,7 +20,7 @@ class PatternUtilityTest extends UnitTestCase {
      * @dataProvider uriPatterns
      */
     public function convertsSimplifiedPatternSyntaxToRegularExpression($uriPattern) {
-        $this->assertEquals(preg_quote($uriPattern, '/'), PatternUtility::translatePatternToRegex($uriPattern));
+        $this->assertEquals('/' . preg_quote($uriPattern, '/') . '/', PatternUtility::translatePatternToRegex($uriPattern));
     }
 
 }

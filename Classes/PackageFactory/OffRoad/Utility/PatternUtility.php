@@ -28,7 +28,7 @@ class PatternUtility {
             }
         }
 
-        return implode('\/', $regexParts);
+        return sprintf('/%s/', implode('\/', $regexParts));
     }
 
 }
