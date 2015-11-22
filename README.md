@@ -32,6 +32,27 @@ PackageFactory:
 
 Now `/different/route` will lead to the content that was formerly displayed at `/route/to/target.html`.
 
+### Wildcards
+
+You can use wildcards (`...`) to describe your patterns. A wildcard used in the mapping key will be mapped to the corresponding wildcard in the target string:
+
+```yaml
+PackageFactory:
+  OffRoad:
+    mapping:
+      '/some/...': '/go/to/...'
+      '/.../info.html': '/info/...'
+```
+
+This also works with multiple wildcards. The order in which the wildcards are mapped to the target string is preserved.
+
+```yaml
+PackageFactory:
+  OffRoad:
+    mapping:
+      '/beginning/.../middle/.../end': '/some/deeper/structure/.../...'
+```
+
 ### What happens with the original URIs when I hit them directly?
 
 OffRoad takes care to redirect these URLs with a 301 status code to their intended destination.
