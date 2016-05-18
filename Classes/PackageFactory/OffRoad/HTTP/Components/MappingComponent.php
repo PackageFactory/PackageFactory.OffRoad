@@ -33,7 +33,7 @@ class MappingComponent implements ComponentInterface {
 
         foreach ($this->mapping as $from => $to) {
             if ($this->mappingService->requestPathMatches($requestPath, $from)) {
-                $requestPath = $this->mappingService->mapRequestPathToTarget($requestPath, $from, $to);;
+                $requestPath = $this->mappingService->mapRequestPathToTarget($requestPath, $from, $to);
             } else if ($this->mappingService->requestPathMatches($requestPath, $to)) {
                 $response = $componentContext->getHttpResponse();
                 $response->setStatus(301);
