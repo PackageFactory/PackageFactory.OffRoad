@@ -1,4 +1,6 @@
-# PackageFactory.OffRoad
+# DEPRECATED PackageFactory.OffRoad
+
+This package is deprecated in favor of solutions like https://github.com/Flowpack/neos-dimensionresolver. This package will stay available for existing setups that depend on it but no bugfixes nor features will be added here.
 
 > Remap your Routes in Flow and Neos
 
